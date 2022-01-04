@@ -1,4 +1,5 @@
-import React, { useReducer, useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect, useContext } from "react";
+import AuthContext from "../../store/auth-context";
 import Button from "../UI/Button/Button";
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
@@ -26,11 +27,8 @@ const passwordReducer = (state, action) => {
 
   return { value: "", isValid: false };
 };
+
 const Login = (props) => {
-  // const [enteredEmail, setEnteredEmail] = useState("");
-  // const [emailIsValid, setEmailIsValid] = useState();
-  // const [enteredPassword, setEnteredPassword] = useState("");
-  // const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
     value: "",
@@ -43,6 +41,7 @@ const Login = (props) => {
 
   const { isValid: emailIsValid } = emailState;
   const { isValid: passwordIsValid } = passwordState;
+  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     const identifier = setTimeout(() => {
@@ -78,7 +77,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    authCtx.onLogin(emailState.value, passwordState.value);
   };
 
   return (
@@ -113,7 +112,12 @@ const Login = (props) => {
           />
         </div>
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button
+            btnDark
+            type="submit"
+            className={classes.btn}
+            disabled={!formIsValid}
+          >
             Login
           </Button>
         </div>
