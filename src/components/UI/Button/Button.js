@@ -3,12 +3,6 @@ import React from "react";
 import classes from "./Button.module.css";
 
 const Button = (props) => {
-  if (props.btnOuline) {
-    return <button className="blabal"></button>;
-  }
-  if (props.btnOuline) {
-    return <button className="blabal"></button>;
-  }
   return (
     <button
       type={props.type || "button"}
